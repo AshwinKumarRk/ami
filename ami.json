@@ -4,6 +4,7 @@
         "aws_secret_key": "",
         "aws_region": "",
         "subnet_id": "",
+        "ami_users_shared": "",
         "source_ami": "ami-09e67e426f25ce0d7",
         "ssh_username": "ubuntu" 
     },
@@ -17,6 +18,7 @@
             "subnet_id": "{{user `subnet_id`}}",
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "{{user `ssh_username`}}",
+            "ami_users": "{{ user `ami_users_shared`}}",
             "ami_name": "csye6225_{{timestamp}}",
             "ami_description": "Ubuntu AMI for csye6225"
         }
@@ -26,7 +28,9 @@
             "type": "shell",
             "inline": [
                 "sudo apt-get update",
+                "sleep 20",
                 "sudo apt-get -qy upgrade",
+                "sleep 20",
                 "sudo apt-get -qy --no-install-recommends install nginx -y",
                 "sudo apt-get -qy --no-install-recommends install curl -y",
                 "curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -",
