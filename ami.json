@@ -37,7 +37,6 @@
                 "curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -",
                 "sleep 30",
                 "sudo apt-get install -qy --no-install-recommends nodejs -y",
-                "sudo apt-get install -qy --no-install-recommends mysql-server -y",
                 "sudo apt-get install -qy --no-install-recommends unzip",
                 "sudo apt-get clean",
                 "sudo rm -rf /var/lib/apt/lists/*"
