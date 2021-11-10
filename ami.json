@@ -4,23 +4,23 @@
         "aws_secret_key": "",
         "aws_region": "",
         "subnet_id": "",
-        "ami_users_shared": "",
-        "source_ami": "ami-09e67e426f25ce0d7",
-        "ssh_username": "ubuntu" 
+        "ami_users_shared": "{{env `AMI_USERS`}}",
+        "source_ami": "{{env `SOURCE_AMI`}}",
+        "ssh_username": "{{env `SSH_USERNAME`}}"
     },
     "builders": [
         {
             "type": "amazon-ebs",
-            "access_key": "{{user `aws_access_key`}}",
-            "secret_key": "{{user `aws_secret_key`}}",
-            "region": "{{user `aws_region`}}",
+            "access_key": "{{user `AWS_ACCESS_KEY`}}",
+            "secret_key": "{{user `AWS_SECRET_KEY`}}",
+            "region": "{{user `AWS_REGION`}}",
             "instance_type": "t2.micro",
-            "subnet_id": "{{user `subnet_id`}}",
+            "subnet_id": "{{user `SUBNET_ID`}}",
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "{{user `ssh_username`}}",
             "ami_users": "{{ user `ami_users_shared`}}",
             "ami_name": "csye6225_{{timestamp}}",
-            "ami_description": "Ubuntu AMI for csye6225"
+            "ami_description": "Ubuntu AMI for csye6225a"
         }
     ],
     "provisioners": [
@@ -30,7 +30,18 @@
                 "sudo apt-get update",
                 "sleep 30",
                 "sudo apt-get -qy upgrade",
-                "sleep 30",
+                "sudo apt update",
+                "sleep 31",
+                "sudo apt install ruby-full -y",
+                "sudo apt install wget",
+                "wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install",
+                "sleep 20",
+                "chmod +x ./install",
+                "sudo ./install auto",
+                "sleep 10",
+                "sudo service codedeploy-agent start",
+                "wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb",
+                "sudo dpkg -i -E ./amazon-cloudwatch-agent.deb",
                 "sudo apt-get -qy --no-install-recommends install nginx -y",
                 "sudo apt-get -qy --no-install-recommends install curl -y",
                 "sleep 30",
