@@ -1,4 +1,4 @@
-# ami
+# AMI
 
 1. Zip the ami folder to prepare for scp
    `zip -r webapp.zip webapp`
